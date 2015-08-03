@@ -28,15 +28,15 @@
 - (id)init {
     self = [super init];
     if (self) {
-        [PPNetworkingConfig initWithHost:@"http://test.api.com"];
+        [PPNetworkingConfig initWithHost:@"http://192.168.1.111/"];
         /*
         //设置请求和返回的serializer方式
-         [PPNetworkingConfig initWithHost:@"http://test.api.com"
+         [PPNetworkingConfig initWithHost:@"http://192.168.1.111/"
          requestSerializer: [AFHTTPRequestSerializer serializer]
          responseSerializer:[AFJSONResponseSerializer serializer]];
          
          //如果是soap方式的请求，请用下面的设置
-         [PPNetworkingConfig initWithHost:@"http://test.api.com"
+         [PPNetworkingConfig initWithHost:@"http://192.168.1.111/"
          requestSerializer: [AFXMLRequestSerializer serializer]
          responseSerializer:[AFSoapXmlResponseSerializer serializer]];
          */

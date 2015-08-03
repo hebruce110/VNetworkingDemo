@@ -13,7 +13,7 @@
 //为这个请求设置一个新的host
 - (NSString *)host
 {
-    return @"http://192.168.1.111/";
+    return @"http://192.168.1.112/";
 }
 
 - (NSString *)path {
@@ -25,6 +25,7 @@
     return PPRequestMethodPost;
 }
 
+//可以把这个放到公共参数里设置，位于PPNetworkingHelper里requestReformerWithHeaders方法里
 - (NSDictionary *)requestHeaderFieldValueDictionary
 {
    return @{
