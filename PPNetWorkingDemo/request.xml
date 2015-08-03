@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-16"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Body>
+        <Process xmlns="http://tempuri.org/">
+            <xmlPara>&lt;Message&gt; &lt;MessageHeader&gt; &lt;UserID&gt;diaolinglin&lt;/UserID&gt; &lt;SystemID&gt;tj&lt;/SystemID&gt; &lt;DataType&gt;SbnsywGetOLAServiceItems&lt;/DataType&gt; &lt;ValidateCode&gt;ac9ab12cb112463ab03695caf22b4542&lt;/ValidateCode&gt; &lt;/MessageHeader&gt; &lt;Parameter&gt; &lt;OLAName&gt;&lt;/OLAName&gt; &lt;currentpage&gt;1&lt;/currentpage&gt; &lt;pagesize&gt;20&lt;/pagesize&gt; &lt;/Parameter&gt; &lt;/Message&gt;
+            </xmlPara>
+        </Process>
+    </soap:Body>
+</soap:Envelope>
