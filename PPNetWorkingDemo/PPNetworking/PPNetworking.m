@@ -9,15 +9,12 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "PPNetworkingLogger.h"
 #import "PPNSString+Addition.h"
-#import "AFHTTPRequestSerializer+XMLRequestSerializer.h"
 
 static NSString *const RequestMethodGet     = @"GET";
 static NSString *const RequestMethodPost    = @"POST";
 static NSString *const RequestMethodHead    = @"HEAD";
 static NSString *const RequestMethodPut     = @"PUT";
 static NSString *const RequestMethodDelete  = @"DELETE";
-
-static NSString *const NSLocalizedErrorSummaryKey = @"NSLocalizedErrorSummaryKey";  // NSString
 
 @implementation PPNetworking
 {
@@ -189,33 +186,31 @@ static NSString *const NSLocalizedErrorSummaryKey = @"NSLocalizedErrorSummaryKey
     
     NSString *key = [self requestHashKey:operation];
     PPRequest *request = _requestsRecord[key];
-    if (error) { //请求失败
-        [PPNetworkingLogger printResponse:request error:error];
-        if (request && request.failureCompletionBlock) {
-            NSMutableDictionary *descriptionDict = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
-            if (![PPNetworking isConnected]) { //lost network
-                descriptionDict[NSLocalizedDescriptionKey] = NSLocalizedString(@"Something went wrong. Please make sure \nyou're connected to the internet and try again.", @"网络连接错误描述");
-                request.failureCompletionBlock(request,[NSError errorWithDomain:error.domain code:error.code userInfo:descriptionDict]);
+    request.error = error;
+    
+    //reform response result
+    if (request.responseReformer && [request.responseReformer respondsToSelector:@selector(responseReormer:)]) {
+        [request.responseReformer responseReormer:request];
+    }
+    
+    //intercept action
+    if (request.interceptor && [request.interceptor respondsToSelector:@selector(interceptRequest:)]) {
+        [request.interceptor interceptRequest:request];
+    }    
 
-            }else{
-                request.failureCompletionBlock(request,error);
-            }
+    if (error) { //request failure
+        if (request && request.failureCompletionBlock) {
+            request.failureCompletionBlock(request,request.error);
         }
-    }else {  //请求成功了
-        //request finished
-        if (request.responseReformer && [request.responseReformer respondsToSelector:@selector(responseReormer:)]) {
-            [request.responseReformer responseReormer:request];
-        }
-        
-        //intercept action
-        if (request.interceptor && [request.interceptor respondsToSelector:@selector(interceptRequest:)]) {
-            [request.interceptor interceptRequest:request];
-        }
-        [PPNetworkingLogger printResponse:request error:nil];
+    }else {  //request succeed
         if (request && request.successCompletionBlock) {
             request.successCompletionBlock(request);
         }
     }
+    if (request && request.completionHandler) {
+        request.completionHandler(request.responseObject,request,request.error);
+    }
+    [PPNetworkingLogger printResponse:request error:request.error];
     [self removeOperation:operation];
 }
 
@@ -223,7 +218,7 @@ static NSString *const NSLocalizedErrorSummaryKey = @"NSLocalizedErrorSummaryKey
     NSDictionary *copyRecord = [_requestsRecord copy];
     for (NSString *key in copyRecord) {
         PPRequest *request = copyRecord[key];
-        [request stop];
+        [self cancelRequest:request];
     }
 }
 
@@ -247,6 +242,14 @@ static NSString *const NSLocalizedErrorSummaryKey = @"NSLocalizedErrorSummaryKey
         host = [request.child host];
     }
     return [host stringByAppendingPathComponent:path];
+}
+
+- (BOOL)statusCodeValidator:(NSInteger)statusCode {
+    if (statusCode >= 200 && statusCode <=299) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (NSString *)requestHashKey:(AFHTTPRequestOperation *)operation {
@@ -297,9 +300,9 @@ static NSString *const NSLocalizedErrorSummaryKey = @"NSLocalizedErrorSummaryKey
     return @"unknown";
 }
 
-//检测是否设置了host
+//检测是否设置了base url
 - (void)validateBaseUrl{
-    NSAssert([[PPNetworkingConfig sharedInstance].host isValidUrl], @"Error: Please set request host ,use initWithHost: methord in PPNetworkingConfig");
+    NSAssert([[PPNetworkingConfig sharedInstance].host isValidUrl], @"Error: Please set request base url,use setRequestBaseUrl: methord in PPNetworkingConfig");
 }
 
 @end

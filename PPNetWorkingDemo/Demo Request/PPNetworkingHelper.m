@@ -28,7 +28,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        [PPNetworkingConfig initWithHost:@"http://192.168.1.111/"];
+        [PPNetworkingConfig initWithHost:@"http://xxxx.xxxx:8080/bluetoothaccess/api/" requestSerializer:[AFJSONRequestSerializer serializer] responseSerializer:nil];
         /*
         //设置请求和返回的serializer方式
          [PPNetworkingConfig initWithHost:@"http://192.168.1.111/"
@@ -70,7 +70,7 @@
 
 - (void)responseReormer:(PPRequest *)request
 {
-    //可以提前处理返回的内容，可以结合对request基类的扩展，比如加入一个状态码的类。如果没有处理可以不用写任何内容
+    //可以提前处理返回的内容，可以结合对request基类的扩展，比如加入一个状态码的类，重新设置error信息等。如果没有处理可以不用写任何内容
     
 }
 

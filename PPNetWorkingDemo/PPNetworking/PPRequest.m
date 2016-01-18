@@ -23,6 +23,7 @@
         _requestReformer = nil;
         _responseReformer = nil;
         _interceptor = nil;
+        _error = nil;
         _injector = (id<PPRequestInjector>)self;
         if (_injector && [_injector respondsToSelector:@selector(initInjector:)]) {
             [_injector initInjector:self];
@@ -30,7 +31,7 @@
         if ([self checkProtocolImplementation:@protocol(PPRequestProtocol)]) {
             self.child = (id <PPRequestProtocol>)self;
         }else{ //继承本类的子类如果不遵守PPRequestProtocol协议就抛出异常
-            NSString *errorDetail = [NSString stringWithFormat:@"Error: %@ must implementation the PPRequestProtocol",NSStringFromClass([self class])];
+            NSString *errorDetail = [NSString stringWithFormat:@"subclass %@ must implementation the PPRequestProtocol",NSStringFromClass([self class])];
             NSAssert(NO, errorDetail);
         }
     }
@@ -51,10 +52,9 @@
     return self.requestOperation.isExecuting;
 }
 
-- (void)startWithCompletionBlockWithSuccess:(RequestSuccessCompletionBlock)success
-                                    failure:(RequestFailureCompletionBlock)failure
+- (void)startWithCompletionHandler:(RequestCompletionHandler)handler
 {
-    [self setCompletionBlockWithSuccess:success failure:failure];
+    self.completionHandler = handler;
     [self start];
 }
 
@@ -65,8 +65,16 @@
     self.failureCompletionBlock = failure;
 }
 
+- (void)startWithCompletionBlockWithSuccess:(RequestSuccessCompletionBlock)success
+                                    failure:(RequestFailureCompletionBlock)failure
+{
+    [self setCompletionBlockWithSuccess:success failure:failure];
+    [self start];
+}
+
 - (void)clearCompletionBlock
 {
+    self.completionHandler = nil;
     self.successCompletionBlock = nil;
     self.failureCompletionBlock = nil;
 }

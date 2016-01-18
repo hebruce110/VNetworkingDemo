@@ -31,7 +31,7 @@
 }
 
 - (NSString *)path {
-    return @"/account/modify_profile";
+    return @"http://112.74.201.252:8080/wave/api/user/upload";
 }
 
 - (PPRequestMethod)requestMethod
@@ -53,7 +53,7 @@
     return  ^(id<AFMultipartFormData> formData){
         NSData *imageData = UIImageJPEGRepresentation(_avatarImage, 0.8);
         NSString *fileName = @"avatar.jpg"; //如果后台在存文件时判断了后缀，建议这里最好加后缀
-        NSString *name = @"avatar";
+        NSString *name = @"fileData";
         NSString *type = @"image/jpeg";
         [formData appendPartWithFileData:imageData name:name fileName:fileName mimeType:type];
     };

@@ -9,6 +9,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AFNetworking.h"
 #import "PPNetworkingConfig.h"
 
 @class PPRequest;
@@ -25,10 +26,11 @@ typedef enum{
 //block callback
 typedef void (^RequestSuccessCompletionBlock)(PPRequest *request);
 typedef void (^RequestFailureCompletionBlock)(PPRequest *request,NSError *error);
+typedef void (^RequestCompletionHandler)(id result,PPRequest *request,NSError *error);
 typedef void (^PPRequestMultipartFormDataBlock)(id<AFMultipartFormData> formData);
 typedef void (^PPRequestUploadProgressBlock)(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite);
 
-//规定所有的子类必须符合本协议，否则不能继承此类,子类里必须实现为@required的方法否在init时会抛出异常
+//规定所有的子类必须符合本协议，否则不能继承此类,子类里必须实现为@required的方法才能编译通过
 @protocol PPRequestProtocol <NSObject>
 
 @required
@@ -51,7 +53,7 @@ typedef void (^PPRequestUploadProgressBlock)(NSUInteger bytesWritten, long long 
 
 /**
  *  特别需要注意host一定先要在PPNetworkingConfig里初始化设置一个，否则会抛出没有host
- *  的异常提示，这里把host放在可选里是为了有多个host的场景：
+ *  的异常提示，这里把host放在可选里是为了有多个url的场景：
  *  比如全局host设置为了http://api.test.com，某一个接口需要换到新的http://api2.test.com，
  *  那么可以在子类里实现host，返回http://api2.test.com即可。
  *
@@ -80,8 +82,18 @@ typedef void (^PPRequestUploadProgressBlock)(NSUInteger bytesWritten, long long 
  */
 - (NSTimeInterval)requestTimeoutInterval;
 
+/**
+ *  请求的serializer
+ *
+ *  @return AFHTTPRequestSerializer
+ */
 - (AFHTTPRequestSerializer *)requestSerializer;
 
+/**
+ *  请求返回内容处理的serializer
+ *
+ *  @return AFHTTPResponseSerializer
+ */
 - (AFHTTPResponseSerializer *)responseSerializer;
 
 /**
@@ -140,10 +152,12 @@ typedef void (^PPRequestUploadProgressBlock)(NSUInteger bytesWritten, long long 
 @property (nonatomic, strong) AFHTTPRequestOperation *requestOperation;
 @property (nonatomic, copy) RequestSuccessCompletionBlock successCompletionBlock;
 @property (nonatomic, copy) RequestFailureCompletionBlock failureCompletionBlock;
+@property (nonatomic, copy) RequestCompletionHandler completionHandler;
 @property (nonatomic, strong, readonly) NSDictionary *responseHeaders;
 @property (nonatomic, strong, readonly) NSString *responseString;
 @property (nonatomic, strong, readonly) NSString *absoluteString;
 @property (nonatomic, strong, readonly) id responseObject;
+@property (nonatomic, strong) NSError *error;
 @property (nonatomic, readonly)  NSInteger responseStatusCode;
 @property (nonatomic, weak) id <PPRequestProtocol> child;
 @property (nonatomic, weak) id<PPRequestReformer> requestReformer;
@@ -160,6 +174,13 @@ typedef void (^PPRequestUploadProgressBlock)(NSUInteger bytesWritten, long long 
  */
 - (void)startWithCompletionBlockWithSuccess:(RequestSuccessCompletionBlock)success
                                     failure:(RequestFailureCompletionBlock)failure;
+
+/**
+ *  开始请求，并且通过一个handler返回,
+ *
+ *  @param handler 回调的handler，相当于把success和failure两个block集为一个
+ */
+- (void)startWithCompletionHandler:(RequestCompletionHandler)handler;
 
 /**
  *  设置回调

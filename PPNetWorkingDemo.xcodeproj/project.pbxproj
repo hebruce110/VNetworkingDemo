@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BD4AF2F0D84CE28A5755F53E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49318D09285912556135B3EC /* libPods.a */; };
+		ED11815A1C4D0564008118E6 /* GetMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1181591C4D0564008118E6 /* GetMessageRequest.m */; };
 		ED2394B81B61E3BB00EF1270 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2394B71B61E3BB00EF1270 /* main.m */; };
 		ED2394BB1B61E3BB00EF1270 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2394BA1B61E3BB00EF1270 /* AppDelegate.m */; };
 		ED2394BE1B61E3BB00EF1270 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED2394BD1B61E3BB00EF1270 /* ViewController.m */; };
@@ -30,6 +31,7 @@
 		EDAE78831B69D9EF009DCD9E /* AFHTTPRequestSerializer+XMLRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = EDAE78821B69D9EF009DCD9E /* AFHTTPRequestSerializer+XMLRequestSerializer.m */; };
 		EDAE78891B6A0B15009DCD9E /* AFSoapXmlResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = EDAE78881B6A0B15009DCD9E /* AFSoapXmlResponseSerializer.m */; };
 		EDAE78A11B6A0EF5009DCD9E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDAE78A01B6A0EF5009DCD9E /* libxml2.dylib */; };
+		EDC19D8D1B8C2163007EF0C8 /* td.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EDC19D8C1B8C2163007EF0C8 /* td.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,8 @@
 		49318D09285912556135B3EC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C21A79C94D7B3C160BA48A1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8884DEED61C63C1BD601710A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		ED1181581C4D0564008118E6 /* GetMessageRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetMessageRequest.h; sourceTree = "<group>"; };
+		ED1181591C4D0564008118E6 /* GetMessageRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetMessageRequest.m; sourceTree = "<group>"; };
 		ED2394B21B61E3BB00EF1270 /* PPNetWorkingDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPNetWorkingDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED2394B61B61E3BB00EF1270 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED2394B71B61E3BB00EF1270 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 		EDAE78871B6A0B15009DCD9E /* AFSoapXmlResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSoapXmlResponseSerializer.h; sourceTree = "<group>"; };
 		EDAE78881B6A0B15009DCD9E /* AFSoapXmlResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSoapXmlResponseSerializer.m; sourceTree = "<group>"; };
 		EDAE78A01B6A0EF5009DCD9E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		EDC19D8C1B8C2163007EF0C8 /* td.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = td.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +148,8 @@
 			children = (
 				ED2395041B61F03300EF1270 /* Account */,
 				ED1A12EE1B6F4C0100442B83 /* Soap Demo */,
+				ED1181581C4D0564008118E6 /* GetMessageRequest.h */,
+				ED1181591C4D0564008118E6 /* GetMessageRequest.m */,
 			);
 			name = Business;
 			sourceTree = "<group>";
@@ -196,6 +203,7 @@
 		ED2394B51B61E3BB00EF1270 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EDC19D8C1B8C2163007EF0C8 /* td.jpg */,
 				EDAE78791B69B0AB009DCD9E /* request.xml */,
 				ED2394B61B61E3BB00EF1270 /* Info.plist */,
 				ED2394B71B61E3BB00EF1270 /* main.m */,
@@ -345,6 +353,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDC19D8D1B8C2163007EF0C8 /* td.jpg in Resources */,
 				ED2394C11B61E3BB00EF1270 /* Main.storyboard in Resources */,
 				ED2394C61B61E3BB00EF1270 /* LaunchScreen.xib in Resources */,
 				ED2394C31B61E3BB00EF1270 /* Images.xcassets in Resources */,
@@ -414,6 +423,7 @@
 				ED2394B81B61E3BB00EF1270 /* main.m in Sources */,
 				EDAE78801B69C86C009DCD9E /* SoapXmlDemoRequest.m in Sources */,
 				ED2394E81B61E3D600EF1270 /* NSObject+ProtocolAddition.m in Sources */,
+				ED11815A1C4D0564008118E6 /* GetMessageRequest.m in Sources */,
 				ED2394EC1B61E3D600EF1270 /* PPNSString+Addition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
