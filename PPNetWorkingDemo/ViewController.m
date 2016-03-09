@@ -72,6 +72,7 @@
         //如果需要显示上传进度之类的,在这里....，同理下载进度也可以用download block来回调处理
         //[hubView setProgress:progress];
     }];
+    
     [request startWithCompletionHandler:^(id result, PPRequest *request, NSError *error) {
         if (!error) {
             NSLog(@"%@",result);
